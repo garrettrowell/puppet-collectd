@@ -1,5 +1,6 @@
 
 class collectd::configure (
+	$collectd_confdir = $collectd::params::collectd_confdir,
 	$collectd_conf = $collectd::params::collectd_conf,
 	$collection_conf = $collectd::params::collection_conf,
 	$filters_conf = $collectd::params::filters_conf,
@@ -20,28 +21,32 @@ class collectd::configure (
 	$enable_network = ("$listen_address$forward_address" != "")
 	$store_data = ("$forward_address" == "")
 
-	file { $collectd_conf :
+	file { $collectd_confdir
+		ensure => directory
+	{
+
+	file { "${collectd_confdir}/${collectd_conf}" :
 		ensure => file,
 		content => template('collectd/collectd.conf.erb'),
 	}
 
-	file { $collection_conf :
+	file { "${collectd_confdir}/${collection_conf}" :
 		ensure => file,
 		content => template('collectd/collection.conf.erb'),
 	}
 
-	file { $filters_conf :
+	file { "${collectd_confdir}/${filters_conf}" :
 		ensure => file,
 		content => template('collectd/filters.conf.erb'),
 	}
 
-	file { $thresholds_conf :
+	file { "${collectd_confdir}/${thresholds_conf}" :
 		ensure => file,
 		content => template('collectd/thresholds.conf.erb'),
 	}
 
 	if ($listen_address) {
-		file { $password_file :
+		file { "${collectd_confdir}/${password_file}" :
 			ensure => file,
 			content => "$network_username:$network_password\n",
 		}

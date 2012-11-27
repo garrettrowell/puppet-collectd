@@ -28,14 +28,16 @@ class collectd::params (
 	# Configuration file locations
 	#
 
-	$collectd_conf = "/etc/collectd/collectd.conf"
+	$collectd_confdir = "/etc/collectd"
 
-	$collection_conf = "/etc/collectd/collection.conf"
+	$collectd_conf = "collectd.conf"
 
-	$filters_conf = "/etc/collectd/filters.conf"
+	$collection_conf = "collection.conf"
 
-	$thresholds_conf = "/etc/collectd/thresholds.conf"
+	$filters_conf = "filters.conf"
 
-	$password_file = "/etc/collectd/passwd"
+	$thresholds_conf = "thresholds.conf"
+
+	$password_file = "passwd"
 
 }
