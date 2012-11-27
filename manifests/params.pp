@@ -11,16 +11,16 @@ class collectd::params (
 	$port = 25826,
 	$mysql_user = 'collectd',
 	$mysql_password = '',
-	$plguins = [syslog, cpu, df, disk, entropy, interface, load, memory, process, swap, uptime, users, vmem],
+	$plugins = [syslog, cpu, df, disk, entropy, interface, load, memory, process, swap, uptime, users, vmem],
 ) {
 
 	#
 	# Packages
 	#
 
-	$packages = $operatingsystem ? {
+	$packages = $::osfamily ? {
+		redhat => ['collectd', 'libgcrypt', 'libcurl'],
 		debian => ['collectd-core', 'libgcrypt11', 'libcurl3-gnutls'],
-		ubuntu => ['collectd-core', 'libgcrypt11', 'libcurl3-gnutls'],
 		freebsd => ['collectd', 'libgcrypt'],
 	}
 
