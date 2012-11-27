@@ -10,7 +10,8 @@
 class collectd::params (
 	$port = 25826,
 	$mysql_user = 'collectd',
-	$mysql_password = ''
+	$mysql_password = '',
+	$plguins = [syslog, cpu, df, disk, entropy, interface, load, memory, process, swap, uptime, users, vmem],
 ) {
 
 	#
@@ -36,11 +37,5 @@ class collectd::params (
 	$thresholds_conf = "/etc/collectd/thresholds.conf"
 
 	$password_file = "/etc/collectd/passwd"
-
-	#
-	# Default parameters
-	#
-
-	$plugins = [syslog, cpu, df, disk, entropy, interface, load, memory, process, swap, uptime, users, vmem]
 
 }
