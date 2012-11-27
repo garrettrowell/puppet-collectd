@@ -23,7 +23,7 @@ class collectd::configure (
 
 	file { $collectd_confdir
 		ensure => directory
-	{
+	}
 
 	file { "${collectd_confdir}/${collectd_conf}" :
 		ensure => file,
