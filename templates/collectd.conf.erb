@@ -1126,10 +1126,10 @@ LoadPlugin write_graphite
 <% if plugins.include? "write_graphite" -%>
 <Plugin write_graphite>
   <Carbon>
-    Host "<% scope.function_hiera("collectd::pluginconf::write_graphite::host", "localhost") %>"
-    Port "<% scope.function_hiera("collectd::pluginconf::write_graphite::port", "2003") %>"
-    Prefix "<% scope.function_hiera("collectd::pluginconf::write_graphite::prefix", "collectd.") %>"
-    Postfix "<% scope.function_hiera("collectd::pluginconf::write_graphite::postfix", "") %>"
+    Host "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::host", "localhost"]) %>"
+    Port "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::port", "2003"]) %>"
+    Prefix "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::prefix", "collectd."]) %>"
+    Postfix "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::postfix", ""]) %>"
     EscapeCharacter "_"
     StoreRates false
     AlwaysAppendDS false
