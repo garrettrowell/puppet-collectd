@@ -261,6 +261,9 @@ LoadPlugin vmem
 <% if plugins.include? "wireless" -%>
 #LoadPlugin wireless
 <% end -%>
+<% if plugins.include? "write_graphite" -%>
+LoadPlugin write_graphite
+<% end -%>
 <% if plugins.include? "write_http" -%>
 #LoadPlugin write_http
 <% end -%>
@@ -1119,6 +1122,19 @@ LoadPlugin vmem
 	Verbose false
 </Plugin>
 
+<% end -%>
+<% if plugins.include? "write_graphite" -%>
+<Plugin write_graphite>
+  <Carbon>
+    Host "<% scope.function_hiera("collectd::pluginconf::write_graphite::host", "localhost") %>"
+    Port "<% scope.function_hiera("collectd::pluginconf::write_graphite::port", "2003") %>"
+    Prefix "<% scope.function_hiera("collectd::pluginconf::write_graphite::prefix", "collectd.") %>"
+    Postfix "<% scope.function_hiera("collectd::pluginconf::write_graphite::postfix", "") %>"
+    EscapeCharacter "_"
+    StoreRates false
+    AlwaysAppendDS false
+  </Carbon>
+</Plugin>
 <% end -%>
 <% if plugins.include? "write_http" -%>
 #<Plugin write_http>
