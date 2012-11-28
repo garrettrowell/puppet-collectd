@@ -150,7 +150,7 @@ LoadPlugin mysql
 <% if plugins.include? "netlink" -%>
 #LoadPlugin netlink
 <% end -%>
-<% if enable_network -%>
+<% if plugins.include? "network" -%>
 LoadPlugin network
 <% end -%>
 <% if plugins.include? "nfs" -%>
@@ -204,7 +204,7 @@ LoadPlugin protocols
 <% if plugins.include? "rrdcached" -%>
 #LoadPlugin rrdcached
 <% end -%>
-<% if store_data -%>
+<% if plugins.include? "rrdtool" -%>
 LoadPlugin rrdtool
 <% end -%>
 <% if plugins.include? "sensors" -%>
@@ -681,7 +681,7 @@ LoadPlugin write_graphite
 #</Plugin>
 
 <% end -%>
-<% if enable_network -%>
+<% if plugins.include? "network" -%>
 <Plugin network>
 <% if "" != forward_address -%>
 	# client setup:
@@ -939,7 +939,7 @@ LoadPlugin write_graphite
 #</Plugin>
 
 <% end -%>
-<% if store_data -%>
+<% if plugins.include? "rrdtool" -%>
 <Plugin rrdtool>
 	DataDir "/var/lib/collectd/rrd"
 #	CacheTimeout 120
