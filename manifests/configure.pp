@@ -21,10 +21,18 @@ class collectd::configure (
 		ensure => directory
 	}
 
-	file { "${collectd_confdir}/${collectd_conf}" :
-		ensure => file,
-		content => template('collectd/collectd.conf.erb'),
-	}
+        #Put collectd.conf in /etc/ on RHEL, normal confdir on others
+        if $::osfamily == 'RedHat' {
+          file { "/etc/${collectd_conf}" :
+            ensure => file,
+            content => template('collectd/collectd.conf.erb'),
+          }
+        } else {
+          file { "${collectd_confdir}/${collectd_conf}" :
+            ensure => file,
+            content => template('collectd/collectd.conf.erb'),
+          }
+        }
 
 	file { "${collectd_confdir}/${collection_conf}" :
 		ensure => file,

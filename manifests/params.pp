@@ -28,7 +28,10 @@ class collectd::params (
 	# Configuration file locations
 	#
 
-	$collectd_confdir = "/etc/collectd"
+        case $::osfamily {
+          'RedHat': { $collectd_confdir = "/etc/collectd.d" } 
+           default: { $collectd_confdir = "/etc/collectd"   }
+        }
 
 	$collectd_conf = "collectd.conf"
 

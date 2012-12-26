@@ -1150,6 +1150,10 @@ LoadPlugin write_graphite
 #</Plugin>
 
 <% end -%>
-Include "/etc/collectd/filters.conf"
-Include "/etc/collectd/thresholds.conf"
 
+<% if $::osfamily == 'RedHat' -%>
+Include "<%= scope.lookupvar("collectd::params::collectd_confdir") + "/*.conf" %>"
+<% else -%>
+Include "<%= scope.lookupvar("collectd::params::collectd_confdir") + "/" + scope.lookupvar("collectd::params::filters_conf") %>"
+Include "<%= scope.lookupvar("collectd::params::collectd_confdir") + "/" + scope.lookupvar("collectd::params::thresholds_conf") %>"
+<% end -%>
