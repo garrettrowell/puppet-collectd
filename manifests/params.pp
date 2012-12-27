@@ -19,7 +19,7 @@ class collectd::params (
 	#
 
 	$packages = $::osfamily ? {
-		redhat => ['collectd', 'libgcrypt', 'libcurl'],
+		redhat => ['collectd', 'libgcrypt'],
 		debian => ['collectd-core', 'libgcrypt11', 'libcurl3-gnutls'],
 		freebsd => ['collectd', 'libgcrypt'],
 	}
