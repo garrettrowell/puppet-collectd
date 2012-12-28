@@ -9,7 +9,7 @@
 
 #Hostname "localhost"
 FQDNLookup true
-#BaseDir "/var/lib/collectd"
+BaseDir "<%= scope.function_hiera(["collectd::params::collectd_basedir", "/var/lib/collectd"]) %>"
 #PluginDir "/usr/lib/collectd"
 #TypesDB "/usr/share/collectd/types.db" "/etc/collectd/my_types.db"
 #Interval 10
