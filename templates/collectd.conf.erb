@@ -178,7 +178,9 @@ LoadPlugin notify_email
 #LoadPlugin openvpn
 <% end -%>
 <% if plugins.include? "perl" -%>
-#LoadPlugin perl
+<LoadPlugin perl>
+    Globals true
+</LoadPlugin>
 <% end -%>
 <% if plugins.include? "pinba" -%>
 #LoadPlugin pinba
@@ -789,18 +791,21 @@ LoadPlugin write_graphite
 <% end -%>
 <% if plugins.include? "perl" -%>
 # TODO: support parameters here
-#<Plugin perl>
-#	IncludeDir "/my/include/path"
-#	BaseName "Collectd::Plugins"
-#	EnableDebugger ""
-#	LoadPlugin Monitorus
-#	LoadPlugin OpenVZ
-#
-#	<Plugin foo>
-#		Foo "Bar"
-#		Qux "Baz"
-#	</Plugin>
-#</Plugin>
+<Plugin perl>
+	BaseName "Collectd::Plugins"
+	EnableDebugger ""
+
+<% if plugins.include? "rabbitmq" and plugins.include? "perl" -%>
+        LoadPlugin RabbitMQ
+	<Plugin "RabbitMQ">
+          Username "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::username", "guest"]) %>"
+          Password "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::password", "guest"]) %>"
+          Realm    "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::realm", "RabbitMQ Management"]) %>
+          Host     "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::host", "localhost"]) %>"
+          Port      "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::port", "15672"]) %>"
+	</Plugin>
+<% end -%>
+</Plugin>
 
 <% end -%>
 <% if plugins.include? "pinba" -%>
