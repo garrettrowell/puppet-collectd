@@ -792,7 +792,8 @@ LoadPlugin write_graphite
 <% if plugins.include? "perl" -%>
 # TODO: support parameters here
 <Plugin perl>
-	BaseName "Collectd::Plugins"
+        IncludeDir "/usr/lib64/collectd"
+	#BaseName "Collectd::Plugins"
 	EnableDebugger ""
 
 <% if plugins.include? "rabbitmq" and plugins.include? "perl" -%>
@@ -800,7 +801,7 @@ LoadPlugin write_graphite
 	<Plugin "RabbitMQ">
           Username "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::username", "guest"]) %>"
           Password "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::password", "guest"]) %>"
-          Realm    "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::realm", "RabbitMQ Management"]) %>
+          Realm    "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::realm", "RabbitMQ Management"]) %>"
           Host     "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::host", "localhost"]) %>"
           Port      "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::port", "15672"]) %>"
 	</Plugin>
