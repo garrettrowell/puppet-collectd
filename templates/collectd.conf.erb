@@ -27,7 +27,7 @@ LoadPlugin syslog
 #</Plugin>
 
 <Plugin syslog>
-	LogLevel info
+	LogLevel <%= scope.function_hiera(["collectd::pluginconf::syslog::loglevel", "info"]) %>
 </Plugin>
 
 <% if @plugins.include? "apache" -%>
