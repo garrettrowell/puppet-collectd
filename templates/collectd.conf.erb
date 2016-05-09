@@ -9,7 +9,7 @@
 
 #Hostname "localhost"
 FQDNLookup true
-BaseDir "<%= scope.function_hiera(["collectd::params::collectd_basedir", "/var/lib/collectd"]) %>"
+BaseDir "<%= scope().call_function('hiera',["collectd::params::collectd_basedir", "/var/lib/collectd"]) %>"
 #PluginDir "/usr/lib/collectd"
 #TypesDB "/usr/share/collectd/types.db" "/etc/collectd/my_types.db"
 #Interval 10
@@ -27,7 +27,7 @@ LoadPlugin syslog
 #</Plugin>
 
 <Plugin syslog>
-	LogLevel <%= scope.function_hiera(["collectd::pluginconf::syslog::loglevel", "info"]) %>
+	LogLevel <%= scope().call_function('hiera',["collectd::pluginconf::syslog::loglevel", "info"]) %>
 </Plugin>
 
 <% if @plugins.include? "apache" -%>
@@ -685,20 +685,20 @@ LoadPlugin write_graphite
 <% end -%>
 <% if @plugins.include? "network" -%>
 <Plugin network>
-<% if "" != forward_address -%>
+<% if "" != @forward_address -%>
 	# client setup:
-	<Server "<%= forward_address %>" "<%= forward_port %>">
+	<Server "<%= @forward_address %>" "<%= @forward_port %>">
 		SecurityLevel Encrypt
-		Username "<%= network_username %>"
-		Password "<%= network_password %>"
+		Username "<%= @network_username %>"
+		Password "<%= @network_password %>"
 	</Server>
 	TimeToLive 128
 <% end -%>
-<% if "" != listen_address -%>
+<% if "" != @listen_address -%>
 	# server setup:
-	<Listen "<%= listen_address %>" "<%=  listen_port %>">
+	<Listen "<%= @listen_address %>" "<%=  @listen_port %>">
 		SecurityLevel Encrypt
-		AuthFile "<%= password_file %>"
+		AuthFile "<%= @password_file %>"
 	</Listen>
 <% end -%>
 	MaxPacketSize 1024
@@ -799,11 +799,11 @@ LoadPlugin write_graphite
 <% if @plugins.include? "rabbitmq" and plugins.include? "perl" -%>
         LoadPlugin RabbitMQ
 	<Plugin "RabbitMQ">
-          Username "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::username", "guest"]) %>"
-          Password "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::password", "guest"]) %>"
-          Realm    "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::realm", "RabbitMQ Management"]) %>"
-          Host     "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::host", "localhost"]) %>"
-          Port      "<%= scope.function_hiera(["collectd::pluginconf::rabbitmq::port", "15672"]) %>"
+          Username "<%= scope().call_function('hiera',["collectd::pluginconf::rabbitmq::username", "guest"]) %>"
+          Password "<%= scope().call_function('hiera',["collectd::pluginconf::rabbitmq::password", "guest"]) %>"
+          Realm    "<%= scope().call_function('hiera',["collectd::pluginconf::rabbitmq::realm", "RabbitMQ Management"]) %>"
+          Host     "<%= scope().call_function('hiera',["collectd::pluginconf::rabbitmq::host", "localhost"]) %>"
+          Port      "<%= scope().call_function('hiera',["collectd::pluginconf::rabbitmq::port", "15672"]) %>"
 	</Plugin>
 <% end -%>
 </Plugin>
@@ -1132,10 +1132,10 @@ LoadPlugin write_graphite
 <% if @plugins.include? "write_graphite" -%>
 <Plugin write_graphite>
   <Carbon>
-    Host "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::host", "localhost"]) %>"
-    Port "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::port", "2003"]) %>"
-    Prefix "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::prefix", "collectd."]) %>"
-    Postfix "<%= scope.function_hiera(["collectd::pluginconf::write_graphite::postfix", ""]) %>"
+    Host "<%= scope().call_function('hiera',["collectd::pluginconf::write_graphite::host", "localhost"]) %>"
+    Port "<%= scope().call_function('hiera',["collectd::pluginconf::write_graphite::port", "2003"]) %>"
+    Prefix "<%= scope().call_function('hiera',["collectd::pluginconf::write_graphite::prefix", "collectd."]) %>"
+    Postfix "<%= scope().call_function('hiera',["collectd::pluginconf::write_graphite::postfix", ""]) %>"
     EscapeCharacter "_"
     StoreRates false
     AlwaysAppendDS false
